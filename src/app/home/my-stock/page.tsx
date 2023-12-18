@@ -24,7 +24,7 @@ export default observer(function MyStock() {
             icon={<UpLoadIcon />}
             className="p-3 rounded-md"
             onClick={() => {
-              setAside("LoadStock");
+              setAside("LoadStock", "my-stock"); //add context to use it 
             }}
           />
 

@@ -1,21 +1,28 @@
 "use client";
 import { useState } from "react";
 import { IconX, FileIcon, AlertCheck } from "./Icons";
-import {ProgressBar} from "./ProgressBar";
+import { ProgressBar } from "./ProgressBar";
 
-interface AddStockCardProps  {
+interface AddStockCardProps {
   title: string;
   file: string;
   currentDate: string;
   className?: string;
+  onDeleteClick?: () => void;
 }
 
-export function AddStockCard({ title, file, currentDate, className } : AddStockCardProps) {
-  const [showProgress, setShowProgress] = useState<Boolean>(true);
+export function AddStockCard({
+  title,
+  file,
+  currentDate,
+  className,
+  onDeleteClick,
+}: AddStockCardProps) {
 
-
-  const handleProgressComplete = () => {
-    setShowProgress(false);
+  const handleDeleteClick = () => {
+    if (onDeleteClick) {
+      onDeleteClick();
+    }
   };
 
   return (
@@ -34,23 +41,17 @@ export function AddStockCard({ title, file, currentDate, className } : AddStockC
             </div>
           </div>
         </div>
-        <button className="bg-transparent border-none cursor-pointer">
+        <button className="bg-transparent border-none cursor-pointer" onClick={handleDeleteClick}>
           <IconX />
         </button>
       </header>
       <footer className="flex flex-col items-end flex-1">
-        {showProgress ? (
-          <div className="w-full relative bottom-0">
-            <ProgressBar onComplete={handleProgressComplete} />
-          </div>
-        ) : (
-          <>
-            <p className="text-grey flex gap-2 items-center">
-              {currentDate}
-              <AlertCheck className="text-green" />
-            </p>
-          </>
-        )}
+        <>
+          <p className="text-grey flex gap-2 items-center">
+            {currentDate}
+            <AlertCheck className="text-green" />
+          </p>
+        </>
       </footer>
     </article>
   );
