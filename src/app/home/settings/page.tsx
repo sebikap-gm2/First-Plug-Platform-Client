@@ -5,7 +5,6 @@ import { VisaIcon } from "@/common/Icons";
 import { useCallback, useState } from "react";
 import { CreationTeamMember } from "@/types";
 export default function Settings() {
-  //TODO: CONSULTAR QUE ES LO QUE SE COMPELTA EN EL FORMULARIO DE SETTINGS.
   const [state, setState] = useState<CreationTeamMember>({
     firstName: "",
     img: "",

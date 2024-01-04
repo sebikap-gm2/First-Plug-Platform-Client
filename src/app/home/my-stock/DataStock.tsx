@@ -1,11 +1,10 @@
 "use client";
-
 import { Table } from "@/components";
 import { Layout, Button } from "@/common";
 import { ShopIcon, UpLoadIcon } from "@/common/Icons";
 import { useRouter } from "next/navigation";
 
-export default function MyStockPage() {
+export default function DataStock() {
   const router = useRouter();
 
   return (

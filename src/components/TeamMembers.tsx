@@ -2,9 +2,10 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/models/root.store";
 import { GridTeam, TableTeam } from "./";
+import { displayView } from "@/types";
 
 interface TeamMembersProps {
-  display?: string;
+  display?: displayView;
 }
 
 export const TeamMembers = observer(function ({ display }: TeamMembersProps) {

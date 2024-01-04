@@ -32,7 +32,7 @@ export const ShipmentStore = types
         //TODO: consultar la forma en la que se define el status, y definirlo
       });
 
-      return months;
+      return months.filter(month=>month.month !== null)
     },
     get shipmentDetails() {
       const shipment = store.shipments.find(

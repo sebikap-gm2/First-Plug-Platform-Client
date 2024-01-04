@@ -1,22 +1,14 @@
-import { Layout, EmptyCard, CustomLink } from "@/common";
+"use client"
+import { useStore } from "@/models";
+import { observer } from "mobx-react-lite";
+import EmptyShipments from "./EmptyShipments";
+import DataShipments from "./DataShipments";
 
-export default function Shipments() {
+export default observer( function Shipments() {
+  const { shipments:{shipments}}= useStore()
   return (
-    <Layout className="border-2 shadow-sm border-border rounded-md grid place-items-center w-[98%] ">
-      <EmptyCard
-        imageBottom="/world.svg"
-        paragraph="You haven't made any shipment yet."
-        altImage="World"
-      >
-        <CustomLink
-          variant="primary"
-          size="big"
-          className="rounded-md flex justify-center"
-          href="/home/my-stock"
-        >
-          Got to My Stock
-        </CustomLink>
-      </EmptyCard>
-    </Layout>
+    <div>
+      {shipments.length? <DataShipments />: <EmptyShipments />}
+    </div>
   );
-}
+})

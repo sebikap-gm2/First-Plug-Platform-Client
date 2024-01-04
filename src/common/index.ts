@@ -12,7 +12,7 @@ export * from "./EmptyCard";
 export * from "./EquipmentRow";
 export * from "./FormLayout";
 export * from "./Graphs";
-export * from "./Header";
+export * from "./HeaderOrders";
 export * from "./Icons";
 export * from "./ImgPorfile";
 export * from "./Input";

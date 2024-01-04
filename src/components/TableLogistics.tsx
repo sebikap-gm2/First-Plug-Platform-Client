@@ -7,6 +7,8 @@ export const TableLogistics = observer(function () {
   const {
     shipments: { shipmentsByMonth },
   } = useStore();
+
+  console.log({shipmentsByMonth})
   return (
     <table className="flex-col\ border border-border divide-y divide-gray-200 font-inter text-black">
       <thead className="py-4 px-5">
