@@ -11,7 +11,7 @@ import { FormEvent } from "react";
 export default function Register() {
   const nameInput = useInput("", "required");
   const emailInput = useInput("", "email");
-  const passWordInput = useInput("", "password");
+  const passwordInput = useInput("", "password");
 
   const router = useRouter();
 
@@ -20,9 +20,9 @@ export default function Register() {
 
     try {
       await AuthServices.register({
-        fullName: nameInput.value,
+        name: nameInput.value,
         email: emailInput.value,
-        password: passWordInput.value,
+        password: passwordInput.value,
       });
       router.push("/login");
     } catch (error) {
@@ -52,7 +52,7 @@ export default function Register() {
               title="Password"
               placeholder="Password"
               type="password"
-              {...passWordInput}
+              {...passwordInput}
             />
           </div>
 

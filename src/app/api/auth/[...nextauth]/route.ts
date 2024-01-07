@@ -19,29 +19,38 @@ const handler = NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "email", type: "email", placeholder: "test@test.com" },
+        email: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials, req) {
-        try {
-          const response = await AuthServices.login({
-            email: credentials?.email,
-            password: credentials?.password,
-          });
-      
-          if (response.data.error) {
-            throw new Error("Failed to authenticate: " + response.data.error);
-          }
-      
-          return response.data.user;
-        } catch (error) {
-          throw error;
+        const user = await AuthServices.login({
+          email: credentials?.email,
+          password: credentials?.password,
+        });
+
+        // TODO: Handle authorization failure
+        if (user) {
+          return user;
+        } else {
+          return null;
         }
-      }
+      },
     }),
   ],
   callbacks: {
+    async signIn({user, account}) {
+      const authenticatedUser = {
+        email: user.email,
+        image: user.image,
+        name: user.name,
+      };
+
+      if (account.provider !== "credentials") {
+        await AuthServices.createIfNotExists(authenticatedUser);
+      }
+
+      return true;
+    },
     async jwt({ token, user }) {
       return { ...token, ...user };
     },

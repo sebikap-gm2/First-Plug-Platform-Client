@@ -1,20 +1,10 @@
+import { LoginUser, RegisterUser, RegisterUserPlatforms } from "@/types";
 import axios, { AxiosResponse } from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-type User = {
-  fullName: string;
-  email: string;
-  password: string;
-};
-
-type LoginUser = {
-  email: string;
-  password: string;
-};
-
 export class AuthServices {
-  static async register(data: User): Promise<AxiosResponse> {
+  static async register(data: RegisterUser): Promise<AxiosResponse> {
     return await axios.post(`${BASE_URL}/api/auth/register`, data);
   }
 
@@ -26,12 +16,11 @@ export class AuthServices {
     return user.data;
   }
 
-  static async me(token: string) {
-    const user: AxiosResponse = await axios.get(`${BASE_URL}/api/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return user.data.payload;
+  static async createIfNotExists(data: RegisterUserPlatforms) {
+    const user = await axios.post(
+      `${BASE_URL}/api/auth/registerAuthenticationProvider`,
+      data
+    );
+    return user.data;
   }
 }
