@@ -3,7 +3,7 @@ import { Button } from "@/common";
 import { TrashIcon } from "@/common/Icons";
 import Image from "next/image";
 import { observer } from "mobx-react-lite";
-import { TeamMemberServices } from "@/services/teamMember.services";
+import { Memberservices } from "@/services/teamMember.services";
 import { useStore } from "@/models/root.store";
 import { FormInput } from "./";
 import { useCallback, useState } from "react";
@@ -19,11 +19,11 @@ export const EditMemberAside = observer(function () {
   } = useStore();
 
   const handleEditMember = () => {
-    TeamMemberServices.updateMember(selectedMember._id, memberData)
+    Memberservices.updateMember(selectedMember._id, memberData)
       .then((res) => {
         setMemberData(undefined);
         setFinished(true);
-        TeamMemberServices.getAllMembers().then((res) => {
+        Memberservices.getAllMembers().then((res) => {
           setMembers(res);
         });
       })

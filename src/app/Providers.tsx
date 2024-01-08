@@ -3,7 +3,14 @@
 import { RootStore, RootStoreContext } from "@/models";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode, useEffect } from "react";
-import { ProductServices, TeamMemberServices } from "@/services";
+import {
+  ProductServices,
+  Memberservices,
+  ShipmentServices,
+  OrderServices,
+} from "@/services";
+
+import { Shipment } from "./../types/shipment"
 
 type ProvidersProps = {
   children: ReactNode;
@@ -21,13 +28,32 @@ export default function Providers({ children }: ProvidersProps) {
 
   useEffect(() => {
     (async () => {
-      TeamMemberServices.getAllMembers().then((res) => {
-        store.members.setMembers(res);
-      });
-      ProductServices.getAllProducts().then((res) => {
-        store.products.setProducts(res);
-      });
-    })()
+
+      //Members
+      const membersResponse = await Memberservices.getAllMembers();
+      store.members.setMembers(membersResponse)
+
+      //Teams
+      // const teamsResponse = await TeamServices.getAllTeams();
+      // store.teams.setTeams(teamsResponse)
+      // We dont've mock data teams from API
+
+      //Products
+      const productsResponse = await ProductServices.getAllProducts();
+      store.products.setProducts(productsResponse);
+
+      //Orders
+      const ordersResponse = await OrderServices.getAllOrders();
+      store.orders.setOrders(ordersResponse);
+
+      //Shipments
+      const shipmentsResponse = await ShipmentServices.getAllShipments(); //Here received an Axiosresponse Object with shipments
+      const shipmentsData = shipmentsResponse.data.map((shipment:  Shipment) => ({ //Here we've only Shipment data to hydrate store
+        ...shipment
+      }));
+      store.shipments.setShipments(shipmentsData);
+
+    })();
   }, [store]);
 
   return (

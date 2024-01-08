@@ -8,12 +8,10 @@ interface TeamMembersProps {
 }
 
 export const TeamMembers = observer(function ({ display }: TeamMembersProps) {
-  const {
-    members: { members },
-  } = useStore();
+
   return (
     <section className="flex flex-col gap-4">
-      {display === "grid" ? <GridTeam members={members} /> : <TableTeam />}
+      {display === "grid" ? <GridTeam  /> : <TableTeam />}
     </section>
   );
 });

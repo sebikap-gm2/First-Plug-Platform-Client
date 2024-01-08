@@ -11,20 +11,20 @@ type CreationOrder = Omit<Omit<Product, "_id">, "__v">;
 
 export class OrderServices {
   static async getAllOrders(): Promise<Order[]> {
-    const response: AxiosResponse = await axios.get(`${BASE_URL}/orders`);
+    const response: AxiosResponse = await axios.get(`${BASE_URL}/api/orders`);
     return response.data;
   }
 
   static async createOrder(data: CreationOrder): Promise<Order> {
     const response: AxiosResponse = await axios.post(
-      `${BASE_URL}/orders`,
+      `${BASE_URL}/api/orders`,
       data
     );
     return response.data;
   }
   static async updateOrder(id: Order["_id"], data: Order): Promise<Order> {
     const response: AxiosResponse = await axios.put(
-      `${BASE_URL}/orders/${id}`,
+      `${BASE_URL}/api/orders/${id}`,
       data
     );
     return response.data;
@@ -32,14 +32,14 @@ export class OrderServices {
 
   static async deleteOrder(id: Order["_id"]): Promise<DeleteOrderResponse> {
     const response: AxiosResponse = await axios.delete(
-      `${BASE_URL}/orders/${id}`
+      `${BASE_URL}/api/orders/${id}`
     );
     return response.data;
   }
 
   static async getOneOrder(orderId: Order["_id"]): Promise<Order> {
     const response: AxiosResponse = await axios.get(
-      `${BASE_URL}/orders/${orderId}`
+      `${BASE_URL}/api/orders/${orderId}`
     );
     return response.data;
   }

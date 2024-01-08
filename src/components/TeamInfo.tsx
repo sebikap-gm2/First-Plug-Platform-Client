@@ -6,7 +6,7 @@ import { AddMemberForm } from "./";
 import { TeamServices } from "@/services/team.services";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/models/root.store";
-import { TeamMemberServices } from "@/services";
+import { Memberservices } from "@/services";
 import { TeamMember, Team } from "@/types";
 
 interface TeamInfoProps {
@@ -28,7 +28,7 @@ export const TeamInfo = observer(function ({ team }: TeamInfoProps) {
         TeamServices.getAllTeams().then((res) => {
           setTeams(res);
         });
-        TeamMemberServices.getAllMembers().then((res) => {
+        Memberservices.getAllMembers().then((res) => {
           setMembers(res);
         });
       });
@@ -40,7 +40,7 @@ export const TeamInfo = observer(function ({ team }: TeamInfoProps) {
       TeamServices.getAllTeams().then((res) => {
         setTeams(res);
       });
-      TeamMemberServices.getAllMembers().then((res) => {
+      Memberservices.getAllMembers().then((res) => {
         setMembers(res);
       });
     });

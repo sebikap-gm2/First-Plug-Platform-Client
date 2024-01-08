@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import memberImage from "../../../../public/member.png";
 import { IconX } from "../../../common/Icons";
 import { observer } from "mobx-react-lite";
-import { TeamMemberServices } from "@/services/teamMember.services";
+import { Memberservices } from "@/services/teamMember.services";
 import { useStore } from "@/models/root.store";
 import { TeamServices } from "@/services/team.services";
 import { FormInput } from "@/components";
@@ -34,7 +34,7 @@ export default observer(function AddTeam() {
   }, []);
 
   const handleAddTeamMember = () => {
-    TeamMemberServices.createMember(memberData)
+    Memberservices.createMember(memberData)
       .then((res) => {
         alert("Member created!");
         setMemberData(undefined);

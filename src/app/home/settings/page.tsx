@@ -21,7 +21,6 @@ export default function Settings() {
     joiningDate: "",
     timeSlotForDelivery: "",
     additionalInfo: "",
-    image: "",
   });
   const handleInput = useCallback((key: string, value: unknown) => {
     setState((prev) => ({

@@ -22,7 +22,9 @@ export const ShipmentStore = types
       }));
 
       store.shipments.forEach((shipment) => {
-        const shipmentMonth = shipment.date.getUTCMonth();
+        const date = new Date(shipment.date);
+      
+        const shipmentMonth = date.getUTCMonth();
         months[shipmentMonth].month = shipmentMonth;
         months[shipmentMonth].shipments.push(shipment);
         months[shipmentMonth].price = shipment.products.reduce(
@@ -39,14 +41,16 @@ export const ShipmentStore = types
         (shipment) => shipment._id === store.shipmentId
       );
 
-      return shipment.products;
+      return shipment?.products || [];
     },
 
+    //TODO: check this because dont filter data // It could be due to a problem in the product IDs
     shipmentByProduct(productId: string) {
       return store.shipments.filter((shipment) =>
-        shipment.products.some((product) => product._id === productId)
+        shipment.products.some((product) => product._id === productId) 
       );
     },
+
     shipmentByMember(memberId: string) {
       const shipment = store.shipments.find(
         (shipment) => shipment.memberId === memberId

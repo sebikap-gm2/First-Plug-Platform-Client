@@ -1,6 +1,6 @@
 "use client";
 import { CustomLink, Button } from "@/common";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { TableDetailsShipments } from "./";
 import { ArrowLeft } from "@/common/Icons";
 import { observer } from "mobx-react-lite";
@@ -26,6 +26,7 @@ export const TableShipments = observer(function ({
     updatedRowOpenState[index] = !updatedRowOpenState[index];
     setRowOpenState(updatedRowOpenState);
   };
+
   return (
     <table
       className={` flex-col w-full rounded-lg overflow-hidden border border-grey  border-1 ${
@@ -47,7 +48,7 @@ export const TableShipments = observer(function ({
       </thead>
       <tbody>
         {shipments.map((shipment, index) => (
-          <>
+          <Fragment key={shipment._id}>
             <tr
               key={shipment._id}
               className={`${
@@ -56,12 +57,20 @@ export const TableShipments = observer(function ({
             >
               <td className="  py-4 px-3 ">{shipment._id}</td>
               <td className="  py-4 px-3">
-                <b>{shipment.date.toISOString()}</b>
+                <b>{shipment.date}</b>
               </td>
               <td className="  py-4 px-3">{shipment.products.length}</td>
               <td className=" py-4 px-3">{shipment.type}</td>
-              <td className=" py-4 px-3">
-                <CustomLink href={"/"}>Link {">"}</CustomLink>
+              <td className="py-4 px-3">
+                {shipment.trackingURL ? (
+                  <CustomLink
+                    href={shipment.trackingURL}
+                  >
+                    Track {">"}
+                  </CustomLink>
+                ) : (
+                  <span>No Track</span>
+                )}
               </td>
               <td className=" py-4 px-3">$ {orderPrice(index)}</td>
               <td className="  " onClick={() => toggleRow(index)}>
@@ -74,11 +83,11 @@ export const TableShipments = observer(function ({
             {rowOpenState[index] && (
               <tr>
                 <td colSpan={12}>
-                  <TableDetailsShipments />
+                  <TableDetailsShipments shipments={shipment.products} />
                 </td>
               </tr>
             )}
-          </>
+          </Fragment>
         ))}
       </tbody>
     </table>

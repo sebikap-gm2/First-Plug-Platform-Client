@@ -8,6 +8,7 @@ export const ORDER_STATUSES = [
   "ConfirmationPending",
   "PaymentPending",
 ] as const;
+
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
 
 export const OrderModel = types.model({
@@ -17,4 +18,5 @@ export const OrderModel = types.model({
   date: types.string,
   products: types.optional(types.array(ProductModel), []),
 });
+
 export type Order = Instance<typeof OrderModel>;

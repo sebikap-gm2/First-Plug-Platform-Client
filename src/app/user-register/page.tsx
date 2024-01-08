@@ -22,7 +22,6 @@ export default function UserRegister() {
     joiningDate: "",
     timeSlotForDelivery: "",
     additionalInfo: "",
-    image: "",
   });
   const handleInput = useCallback((key: string, value: unknown) => {
     setState((prev) => ({
@@ -39,6 +38,7 @@ export default function UserRegister() {
             alt="logoFirstPlug"
             width={200}
             height={100}
+            priority
           />
         </div>
         <Button

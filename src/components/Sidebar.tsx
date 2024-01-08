@@ -42,7 +42,7 @@ export const Sidebar = function () {
               className="w-10"
             />
           ) : (
-            <Image src="/logo1.png" alt="Logo" width={144.2} height={48} />
+            <Image src="/logo1.png" alt="Logo" width={144.2} height={48} priority />
           )}
         </div>
       </header>

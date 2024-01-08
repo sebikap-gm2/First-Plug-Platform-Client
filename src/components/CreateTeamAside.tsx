@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@/common";
 import { AddMemberForm } from "./";
-import { TeamServices, TeamMemberServices } from "../services";
+import { TeamServices, Memberservices } from "../services";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/models/root.store";
 import { TeamMember, TeamModel } from "@/types";
@@ -29,7 +29,7 @@ export const CreateTeamAside = observer(function ({
         TeamServices.getAllTeams().then((res) => {
           setTeams(res);
         });
-        TeamMemberServices.getAllMembers().then((res) => {
+        Memberservices.getAllMembers().then((res) => {
           setMembers(res);
         });
       });

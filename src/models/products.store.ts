@@ -17,6 +17,11 @@ export const ProductsStore = types
 
       return Object.values(groupedProducts) as Product[];
     },
+
+    productById(productId: string) {
+      return store.products.find(product => product._id === productId);
+    }
+    
   }))
   .actions((store) => ({
     setProducts(products: Product[]) {

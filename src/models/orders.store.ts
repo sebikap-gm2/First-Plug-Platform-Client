@@ -15,12 +15,22 @@ export const OrderStore = types
 
       return order.products.reduce((a, b) => parseInt(b.price) + a, 0);
     },
+
     orderPrice(index: number) {
-      return store.orders[index].products.reduce(
-        (a, b) => parseInt(b.price) + a,
-        0
-      );
-    },
+      const order = store.orders[index];
+    
+      if (order && order.products) {
+        return order.products.reduce(
+          (a, b) => parseInt(b.price) + a,
+          0
+        );
+      }
+    
+      return 0;
+    }
+
+
+
   }))
 
   .actions((store) => ({

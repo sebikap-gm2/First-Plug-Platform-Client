@@ -13,8 +13,10 @@ export const TableDetails = observer(function ({
   className,
   productId,
 }: TableDetailsProps) {
+
   const {
     shipments: { shipmentByProduct },
+
   } = useStore();
 
   const SHIPMENT_ACTION = {
@@ -24,6 +26,7 @@ export const TableDetails = observer(function ({
     Avaliable: "Assing To",
     Shipped: "Track >",
   };
+
   return (
     <table
       className={`flex-col w-full rounded-lg overflow-hidden ${

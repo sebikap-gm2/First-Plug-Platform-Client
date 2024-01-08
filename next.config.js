@@ -10,7 +10,8 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    //this domains is only rendering mock data in components
+    domains: ["lh3.googleusercontent.com", "loremflickr.com", "picsum.photos", "cloudflare-ipfs.com", "avatars.githubusercontent.com"],
   },
 };
 
