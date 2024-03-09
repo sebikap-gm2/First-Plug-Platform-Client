@@ -5,7 +5,7 @@ import { Card } from ".";
 import { AddStockCard, Button } from "@/common";
 import Papa from "papaparse";
 import { useStore } from "@/models";
-import axios from "axios";
+import { HTTPRequests } from "@/config/axios.config";
 
 const EMPTY_FILE_INFO: CsvInfo = {
   title: "",
@@ -20,8 +20,8 @@ type CsvInfo = {
 };
 
 const CSVUrls = {
-  MyTeam: "/api/my-team",
-  MyStock: "/api/my-stock",
+  MyTeam: "/api/members/bulkcreate",
+  MyStock: "/api/products/bulkcreate",
 } as const;
 
 type CSVUrl = keyof typeof CSVUrls;
@@ -43,22 +43,40 @@ export const LoadStock = function () {
 
   const { title, file, currentDate } = csvInfo;
 
-  const postCsvToDatabase = async (parsedData: unknown) => {
+  const postCsvToDatabase = async (parsedData) => {
     setIsLoading(true);
 
     try {
-
       const apiUrl = CSVUrls[csvContext];
 
-      const response = await axios.post(apiUrl, parsedData)
-      setIsLoading(false);
+      let data: any;
 
+      if (csvContext === "MyStock") {
+        data = parsedData.map((product) => {
+          return { ...product, stock: parseInt(product.stock) };
+        });
+      }
+
+      console.log(csvContext);
+
+      if (csvContext === "MyTeam") {
+        data = parsedData.map((member) => {
+          return {
+            ...member,
+            dateOfBirth: new Date(member.dateOfBirth).toISOString(),
+            joiningDate: new Date(member.joiningDate).toISOString(),
+            teams: member.teams.split(","),
+          };
+        });
+      }
+
+      const response = await HTTPRequests.post(apiUrl, data);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-
   };
 
   const onFileChangeHandler = (csvFile: File) => {
@@ -148,7 +166,7 @@ export const LoadStock = function () {
           size="big"
           className="p-3 rounded-md w-full"
           onClick={() => {
-           handleAttachFileClick();
+            handleAttachFileClick();
           }}
         />
       </div>

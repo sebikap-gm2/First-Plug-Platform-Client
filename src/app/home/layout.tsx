@@ -44,6 +44,10 @@ export default observer(function RootLayout({ children }: RootLayoutProps) {
         Memberservices.getAllMembers().then((res) => {
           store.members.setMembers(res);
         });
+
+        ProductServices.getAllProducts().then((res) => {
+          store.products.setProducts(res);
+        });
       }
     }
   }, [session]);

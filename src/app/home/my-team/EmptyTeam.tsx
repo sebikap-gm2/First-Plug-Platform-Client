@@ -17,7 +17,7 @@ export default function EmptyTeam() {
           body="Load Team Members"
           icon={<AddIcon />}
           onClick={() => {
-            setAside("LoadStock", "MyStock");
+            setAside("LoadStock", "MyTeam");
           }}
           variant="secondary"
           size="big"
