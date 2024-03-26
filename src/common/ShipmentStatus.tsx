@@ -1,28 +1,14 @@
-import React from "react";
-import { StatusCircleIcon } from "./Icons";
 import { ShipmentStatus } from "@/types";
-import { StatusColor } from "./StatusColors";
+import { ShipmentStateColors, StatusColors } from "./StatusColors";
 
 interface ShipmentStatusProps {
   status: ShipmentStatus;
 }
 
-export function ShipmentStatus({ status }: ShipmentStatusProps) {
-  const statusColor: StatusColor =
-    status === "Avaliable"
-      ? "info"
-      : status === "Delivered"
-      ? "success"
-      : status === "Missing Data"
-      ? "error"
-      : status === "Preparing"
-      ? "warn"
-      : "pending";
+export function ShipmentStatusCard({ status }: ShipmentStatusProps) {
+  const colorClass = `${StatusColors[ShipmentStateColors[status]]}`;
 
   return (
-    <span className="flex items-center gap-1 font-light">
-      <StatusCircleIcon color={statusColor} />
-      {status}
-    </span>
+    <span className={`${colorClass} p-1 rounded-md text-sm`}>{status}</span>
   );
 }

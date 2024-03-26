@@ -1,44 +1,71 @@
-import { ShimpentModel, Shipment, ShipmentByMonthStatus } from "@/types";
+import {
+  ShimpentModel,
+  Shipment,
+  ShipmentByMonth,
+  ShipmentByMonthStatus,
+  ShipmentByMonthTable,
+  IShipmentTable,
+} from "@/types";
 import { types } from "mobx-state-tree";
 
 export const ShipmentStore = types
   .model({
     shipments: types.array(ShimpentModel),
-    shipmentId: types.optional(types.string, ""),
+    selectedShipmentId: types.optional(types.string, ""),
   })
   .views((store) => ({
     get selectedShipment() {
       return store.shipments.find(
-        (shipment) => shipment._id === store.shipmentId
+        (shipment) => shipment._id === store.selectedShipmentId
+      );
+    },
+    get shipmentsTable() {
+      return store.shipments.map(
+        (shipment): IShipmentTable => ({
+          orderId: shipment._id,
+          date: shipment.date,
+          type: shipment.type,
+          productsQuantity: shipment.products.length,
+          price: shipment.products.reduce((a, b) => parseInt(b.price) + a, 0),
+          trackingURL: shipment.trackingURL,
+          products: shipment.products,
+        })
       );
     },
 
-    get shipmentsByMonth() {
-      const months = Array.from({ length: 12 }).map(() => ({
-        month: null,
-        shipments: [] as Shipment[],
-        status: "" as ShipmentByMonthStatus,
-        price: 0,
-      }));
+    get shipmentsByMonth(): ShipmentByMonthTable[] {
+      const months: ShipmentByMonth[] = Array.from({ length: 12 }).map(
+        (m, i) => ({
+          month: `${i + 1}`,
+          shipments: [] as Shipment[],
+          status: "" as ShipmentByMonthStatus,
+          price: 0,
+        })
+      );
 
       store.shipments.forEach((shipment) => {
         const date = new Date(shipment.date);
-      
         const shipmentMonth = date.getUTCMonth();
-        months[shipmentMonth].month = shipmentMonth;
+        const shipmentYear = date.getUTCFullYear();
+        months[shipmentMonth].month = `${shipmentMonth + 1 < 10 && "0"}${
+          shipmentMonth + 1
+        }/${shipmentYear}`;
         months[shipmentMonth].shipments.push(shipment);
         months[shipmentMonth].price = shipment.products.reduce(
           (a, b) => parseInt(b.price) + a,
           0
         );
-        //TODO: consultar la forma en la que se define el status, y definirlo
       });
-
-      return months
+      return months.map(({ month, price, shipments, status }) => ({
+        month,
+        price,
+        shipments: shipments.length,
+        status,
+      }));
     },
     get shipmentDetails() {
       const shipment = store.shipments.find(
-        (shipment) => shipment._id === store.shipmentId
+        (shipment) => shipment._id === store.selectedShipmentId
       );
 
       return shipment?.products || [];
@@ -61,5 +88,8 @@ export const ShipmentStore = types
   .actions((store) => ({
     setShipments(shipments: Shipment[]) {
       store.shipments.replace(shipments);
+    },
+    setSelectedShipmentId(shipmentId: Shipment["_id"]) {
+      store.selectedShipmentId = shipmentId;
     },
   }));

@@ -1,20 +1,21 @@
-import { StateColors, OrderStatus } from "./StatusColors";
+import { OrderStatus } from "@/types";
+import { OrderStateColors, StatusColors } from "./StatusColors";
 
 export interface StateProps {
   status?: OrderStatus;
-  className?: string;
   message?: string;
 }
 
-export function State({ status, className }: StateProps) {
-  const colorClass = status ? StateColors[status] : "bg-disabled"; // If we dont've state, use a default bg
+export function OrderState({ status }: StateProps) {
+  const colorClass = status
+    ? `${StatusColors[OrderStateColors[status]]}`
+    : "bg-disabled";
 
-  
   const statusLength = status ? status.length : 0;
 
   return (
     <p
-      className={`${colorClass} ${className} py-1 rounded-full text-sm font-medium text-center whitespace-nowrap`}
+      className={`${colorClass}  py-1 rounded-full text-sm font-medium  border px-2`}
       style={{ width: `${statusLength + 2}ch` }}
     >
       {status}

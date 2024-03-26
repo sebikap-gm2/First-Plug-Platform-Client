@@ -8,7 +8,7 @@ interface joinerProps {
 }
 
 export function JoinerRow({ joiner }: joinerProps) {
-  const backgroundColorClass = JobPositionColors[1];
+  const backgroundColorClass = JobPositionColors[joiner.jobPosition];
 
   return (
     <div className=" flex items-center gap-2 justify-between p-2 border-b rounded-md border-border   ">

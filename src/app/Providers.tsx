@@ -24,7 +24,6 @@ export default function Providers({ children }: ProvidersProps) {
       const session = await getSession();
       const accessToken = session?.backendTokens.accessToken;
 
-      console.log({ accessToken });
       setAuthInterceptor(accessToken);
     };
 

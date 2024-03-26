@@ -10,6 +10,7 @@ export default observer(function OrderPage() {
   const {
     orders: { orders },
   } = useStore();
+
   return (
     <PageLayout>{orders.length ? <DataOrders /> : <EmptyOrders />}</PageLayout>
   );

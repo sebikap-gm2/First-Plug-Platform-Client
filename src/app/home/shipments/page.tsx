@@ -9,6 +9,7 @@ export default observer(function Shipments() {
   const {
     shipments: { shipments },
   } = useStore();
+
   return (
     <PageLayout>
       {shipments.length ? <DataShipments /> : <EmptyShipments />}

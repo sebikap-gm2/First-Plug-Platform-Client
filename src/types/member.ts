@@ -1,4 +1,5 @@
 import { Instance, types } from "mobx-state-tree";
+import { ShipmentStatus } from "./shipment";
 
 export const TeamMemberModel = types.model({
   _id: types.optional(types.string, ""),
@@ -20,4 +21,14 @@ export const TeamMemberModel = types.model({
 });
 
 export type TeamMember = Instance<typeof TeamMemberModel>;
+
+export type TeamMemberTable = {
+  _id: string;
+  fullName: string;
+  joiningDate: string;
+  dateOfBirth: string;
+  teams: string[];
+  jobPosition: string;
+  shipmentDetails: ShipmentStatus;
+};
 export type CreationTeamMember = Omit<TeamMember, "_id" | "teams">;

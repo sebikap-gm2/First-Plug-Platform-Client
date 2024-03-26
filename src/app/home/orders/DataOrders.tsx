@@ -1,27 +1,28 @@
 "use client";
-import { useEffect, useState } from "react";
-import { TableEquipment, TableLogistics } from "@/components";
-import { Layout, HeaderOrders, Tabs } from "@/common";
+import { useState } from "react";
+import { HeaderOrders, Tabs } from "@/common";
+import { observer } from "mobx-react-lite";
+import { EquipmentTable, LogisticsTable } from "@/components/Tables";
 import { useStore } from "@/models";
-import { OrderServices } from "@/services";
-export default function DataOrders() {
+export default observer(function DataOrders() {
+  const {
+    orders: { orders },
+    shipments: { shipmentsByMonth },
+  } = useStore();
   const [selectedTab, setSelectedTab] = useState<Tabs>("Equipment");
-  const { orders } = useStore();
-
-  useEffect(() => {
-    OrderServices.getAllOrders().then((res) => {
-      orders.setOrders(res);
-    });
-  }, [orders]);
 
   const handleTabClick = (tabName: Tabs) => {
     setSelectedTab(tabName);
   };
 
   return (
-    <Layout className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <HeaderOrders selectedTab={selectedTab} handleTab={handleTabClick} />
-      {selectedTab === "Logistics" ? <TableLogistics /> : <TableEquipment />}
-    </Layout>
+      {selectedTab === "Logistics" ? (
+        <LogisticsTable shipmentsByMonth={shipmentsByMonth} />
+      ) : (
+        <EquipmentTable orders={orders} />
+      )}
+    </div>
   );
-}
+});

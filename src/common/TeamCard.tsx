@@ -11,9 +11,11 @@ export function TeamCard({ team, className }: TeamCardProps) {
   const colors_role = {
     Designer: "bg-design",
     HR: "bg-hr",
+    QA: "bg-purple",
     Sales: "bg-sales",
-    Developer: "bg-dev",
+    Devs: "bg-dev",
     Finance: "bg-finance",
+    unset: "bg-grey",
   };
   return (
     <span

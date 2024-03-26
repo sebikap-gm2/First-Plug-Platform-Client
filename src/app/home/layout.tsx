@@ -4,8 +4,14 @@ import { Navbar, Sidebar, Aside } from "@/components";
 import { useStore } from "@/models";
 import { observer } from "mobx-react-lite";
 import { useSession } from "next-auth/react";
-import { Memberservices, ProductServices } from "@/services";
+import {
+  Memberservices,
+  OrderServices,
+  ProductServices,
+  ShipmentServices,
+} from "@/services";
 import { Layout } from "@/common";
+import { setAuthInterceptor } from "@/config/axios.config";
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -18,6 +24,8 @@ export default observer(function RootLayout({ children }: RootLayoutProps) {
     user: { setUser },
     members: { setMembers },
     products: { setProducts },
+    shipments: { setShipments },
+    orders: { setOrders },
   } = store;
   const session = useSession();
 
@@ -36,8 +44,27 @@ export default observer(function RootLayout({ children }: RootLayoutProps) {
       });
 
       if (sessionStorage.getItem("accessToken")) {
+        setAuthInterceptor(sessionStorage.getItem("accessToken"));
+        Memberservices.getAllMembers().then((res) => {
+          setMembers(res);
+        });
         ProductServices.getAllProducts().then((res) => {
           setProducts(res);
+        });
+        OrderServices.getAllOrders().then((res) => {
+          setOrders(res);
+        });
+        ShipmentServices.getAllShipments().then((res) => {
+          setShipments(res.data);
+        });
+        ProductServices.getAllProducts().then((res) => {
+          setProducts(res);
+        });
+        OrderServices.getAllOrders().then((res) => {
+          setOrders(res);
+        });
+        ShipmentServices.getAllShipments().then((res) => {
+          setShipments(res.data);
         });
       }
     }

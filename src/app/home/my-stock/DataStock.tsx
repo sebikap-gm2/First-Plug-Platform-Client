@@ -1,15 +1,21 @@
 "use client";
-import { Table } from "@/components";
 import { Button } from "@/common";
 import { ShopIcon, UploadIcon } from "@/common/Icons";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/models";
+import { observer } from "mobx-react-lite";
+import { ProductsTable } from "@/components/Tables";
 
-export default function DataStock() {
+export default observer(function DataStock() {
   const router = useRouter();
+  const {
+    products: { products },
+    aside: { setAside },
+  } = useStore();
 
   return (
-    <div className="flex flex-col gap-5 overflow-auto pb-1">
-      <div className="flex justify-between items-center">
+    <div className="h-full w-full flex flex-col gap-4 relative  ">
+      <aside className="flex justify-between items-center h-[6%]   ">
         <div className="flex gap-2">
           <input type="checkbox" />
           <label className="ml-2 text-gray-500">
@@ -17,32 +23,30 @@ export default function DataStock() {
           </label>
         </div>
 
-        <div className="flex  gap-5 mr-3">
-          <div>
-            <Button
-              variant="secondary"
-              body="Load Stock"
-              icon={<UploadIcon />}
-              className="p-3 rounded-md"
-            />
-          </div>
-          <div>
-            <Button
-              variant="primary"
-              icon={<ShopIcon />}
-              body="Shop Now"
-              className="p-3 rounded-md"
-              onClick={() => {
-                router.push("/shop");
-              }}
-            />
-          </div>
-        </div>
-      </div>
+        <div className="flex gap-2   ">
+          <Button
+            className="rounded-md py-2 px-4"
+            variant="secondary"
+            body="Load Stock"
+            icon={<UploadIcon />}
+            onClick={() => setAside("LoadStock")}
+          />
 
-      <div className="mt-10">
-        <Table />
+          <Button
+            className="rounded-md py-2 px-4"
+            variant="primary"
+            icon={<ShopIcon />}
+            body="Shop Now"
+            onClick={() => {
+              router.push("/shop");
+            }}
+          />
+        </div>
+      </aside>
+
+      <div className="h-[90%] top-[8%] w-full overflow-y-auto  absolute ">
+        <ProductsTable products={products} internalProducts={products} />
       </div>
     </div>
   );
-}
+});

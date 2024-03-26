@@ -268,15 +268,19 @@ export function MicrosoftIcon({ className = "" }) {
   );
 }
 
-export function ShopIcon() {
+type ShopIconProps = {
+  className?: string;
+};
+
+export function ShopIcon({ className }: ShopIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
+      strokeWidth={2}
       stroke="currentColor"
-      className="w-4"
+      className={`w-6 h-6 ${className || ""} `}
     >
       <path
         strokeLinecap="round"
@@ -453,7 +457,7 @@ export function ArrowRight({ className, color, strokeWidth }: ArrowRightProps) {
       viewBox="0 0 24 24"
       strokeWidth={strokeWidth || 1.5}
       stroke={color || "currentColor"}
-      className={`w-5 h-5 ${className || ""}`}
+      className={`w-3 ${className}`}
     >
       <path
         strokeLinecap="round"
@@ -477,7 +481,7 @@ export function ArrowLeft({ className, color, strokeWidth }: ArrowLeftProps) {
       viewBox="0 0 24 24"
       strokeWidth={strokeWidth || 1.5}
       stroke={color || "currentColor"}
-      className={`w-5 h-5 ${className || ""}`}
+      className={`w-3 ${className || ""}`}
     >
       <path
         strokeLinecap="round"
@@ -536,15 +540,15 @@ type UploadIconProps = {
   className?: string;
 };
 
-export function UploadIcon() {
+export function UploadIcon({ className = "" }: UploadIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
+      strokeWidth={2}
       stroke="currentColor"
-      className={`w-4 `}
+      className={`w-6 h-6 ${className || ""}`}
     >
       <path
         strokeLinecap="round"

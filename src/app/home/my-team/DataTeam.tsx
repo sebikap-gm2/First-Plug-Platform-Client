@@ -1,15 +1,8 @@
 "use client";
 import React, { useState } from "react";
-
 import { MyTeamActions, MyTeamViewHeader, TeamMembers } from "@/components";
-import { observer } from "mobx-react-lite";
-import { useStore } from "@/models";
 import { DisplayView } from "@/types";
-export default observer(function DataTeam() {
-  const {
-    aside: { setAside },
-    teams: { teams },
-  } = useStore();
+export default function DataTeam() {
   const [display, setDisplay] = useState<DisplayView>("grid");
 
   const toggleView = () =>
@@ -22,4 +15,4 @@ export default observer(function DataTeam() {
       <TeamMembers display={display} />
     </div>
   );
-});
+}

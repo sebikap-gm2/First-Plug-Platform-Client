@@ -3,30 +3,39 @@ import React from "react";
 import { Button, SearchInput, DropdownButton, ImgPorfile } from "@/common";
 import Image from "next/image";
 import Logo from "../../public/logo1.png";
-import { ShopIcon, NotificationIcon } from "@/common/Icons";
-import { useRouter } from "next/navigation";
+import { ShopIcon } from "@/common/Icons";
+import { usePathname, useRouter } from "next/navigation";
 
 type NavbarProps = {
   title?: string;
   searchInput?: string;
   placeholder?: string;
-  hasNotification?: boolean;
 };
 
 export const Navbar = function ({
   title,
   searchInput,
   placeholder,
-  hasNotification,
 }: NavbarProps) {
   const router = useRouter();
+  const pathName = usePathname();
+
+  const Titles = {
+    "my-stock": "My Stock",
+    "my-team": "My Team",
+    orders: "Orders",
+    shipments: "Shipments",
+  } as const;
+
   return (
     <nav className="flex justify-between items-center h-[8vh] px-4  ">
       <div className="flex gap-6 items-center">
         {title === "logo" ? (
           <Image src={Logo} alt="Logo" width={140} height={300} priority />
         ) : (
-          <h1 className="font-bold text-2xl text-black">{title || ""}</h1>
+          <h2 className="font-bold text-2xl text-black">
+            {Titles[pathName.split("/")[2]] ?? ""}
+          </h2>
         )}
 
         {searchInput && <SearchInput placeholder={placeholder} />}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button, TeamCard } from "@/common";
 import { DropDownArrow } from "@/common/Icons";
-import { TeamInfo } from "./";
+import { TeamInfo } from ".";
 import { Team } from "@/types";
 
 interface TeamDetailsProps {
